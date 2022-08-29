@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store/screens/all_product_screen.dart';
+import 'package:store/screens/favorite_product_screen.dart';
 import 'package:store/screens/shopping_cart_sceeen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,33 +12,42 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int c_index = 0;
-  final screens = [
-    MyHomeScreen(),
-    AllProductScreen(),
-    ShoppingCarTScreen(),
-  ];
+  final screens = [MyHomeScreen(), AllProductScreen(), FavoriteProductScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black.withAlpha(100),
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: 12.0,
+        unselectedFontSize: 12.0,
         currentIndex: c_index,
         onTap: ((value) {
           setState(() {
             c_index = value;
           });
         }),
-        items: const [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-              backgroundColor: Colors.blue),
-          BottomNavigationBarItem(
+            icon: Container(
+              margin: const EdgeInsets.only(left: 30),
+              child: const Icon(Icons.home),
+            ),
+            label: 'Home',
+            backgroundColor: Colors.blue,
+          ),
+          const BottomNavigationBarItem(
             icon: Icon(Icons.collections),
             label: 'AllItems',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart',
+            icon: Container(
+                margin: const EdgeInsets.only(right: 30),
+                child: const Icon(Icons.favorite)),
+            label: 'favorite',
           )
         ],
       ),
