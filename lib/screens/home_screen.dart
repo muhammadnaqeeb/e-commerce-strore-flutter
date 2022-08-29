@@ -1,7 +1,10 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:store/screens/all_product_screen.dart';
 import 'package:store/screens/favorite_product_screen.dart';
 import 'package:store/screens/shopping_cart_sceeen.dart';
+
+import '../widgets/sale_slide_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -61,9 +64,71 @@ class MyHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(
-        child: Text('My Home Screen'),
+      appBar: AppBar(
+        title: const Text(
+          'Store',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        leading: const Icon(
+          Icons.store,
+          color: Colors.black,
+        ),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 30),
+            child: IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              color: Colors.black,
+              onPressed: () {},
+            ),
+          ),
+        ],
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(
+              top: 5,
+              left: 20,
+              bottom: 15,
+            ),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'Today\'s Sales!',
+                style: TextStyle(
+                  fontSize: 21,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: size.height * 0.25,
+            child: Swiper(
+              itemCount: 3,
+              itemBuilder: ((context, index) {
+                return saleSlideCard();
+              }),
+              viewportFraction: 0.8,
+              scale: 0.9,
+              // pagination: const SwiperPagination(
+              //   alignment: Alignment.bottomCenter,
+              //   builder: DotSwiperPaginationBuilder(
+              //     color: Colors.white,
+              //     activeColor: Colors.red,
+              //   ),
+              // ),
+              //control: SwiperControl(),
+            ),
+          )
+        ],
       ),
     );
   }
