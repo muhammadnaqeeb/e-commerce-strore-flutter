@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:store/screens/loading_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:store/providers/product_provider.dart';
+import 'package:store/screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    child: const MyApp(),
+    create: (_) => ProductProvider(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +23,7 @@ class MyApp extends StatelessWidget {
       ).copyWith(
         splashFactory: NoSplash.splashFactory,
       ),
-      home: const LoadingScreen(),
+      home: HomeScreen(),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:store/providers/product_provider.dart';
 import 'package:store/screens/all_product_screen.dart';
 import 'package:store/screens/favorite_product_screen.dart';
 import 'package:store/screens/shopping_cart_sceeen.dart';
@@ -59,11 +61,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class MyHomeScreen extends StatelessWidget {
+class MyHomeScreen extends StatefulWidget {
   const MyHomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<MyHomeScreen> createState() => _MyHomeScreenState();
+}
+
+class _MyHomeScreenState extends State<MyHomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final dataProvider = Provider.of<ProductProvider>(context, listen: false);
+    dataProvider.getProductData();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final dataProvider = Provider.of<ProductProvider>(context);
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -83,7 +99,9 @@ class MyHomeScreen extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.shopping_cart),
               color: Colors.black,
-              onPressed: () {},
+              onPressed: () {
+                context.read<ProductProvider>().getProductData();
+              },
             ),
           ),
         ],
@@ -127,6 +145,11 @@ class MyHomeScreen extends StatelessWidget {
               // ),
               //control: SwiperControl(),
             ),
+          ),
+          Container(
+            child: dataProvider.isLoading
+                ? CircularProgressIndicator()
+                : Text('${dataProvider.productData}'),
           )
         ],
       ),
