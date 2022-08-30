@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class PopularItem extends StatelessWidget {
-  const PopularItem({
+  String imageUrl;
+  String productTitle;
+  String productCatagory;
+  int productPrice;
+  PopularItem({
+    required this.imageUrl,
+    required this.productTitle,
+    required this.productCatagory,
+    required this.productPrice,
     Key? key,
   }) : super(key: key);
 
@@ -27,10 +35,16 @@ class PopularItem extends StatelessWidget {
         children: [
           Expanded(
             flex: 1,
-            child: Image.asset('images/shoes.png'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(9),
+                child: Image.network(imageUrl),
+              ),
+            ),
           ),
-          SizedBox(
-            width: 10,
+          const SizedBox(
+            width: 4,
           ),
           Expanded(
             flex: 2,
@@ -39,13 +53,13 @@ class PopularItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'PS4 Comtroller',
-                  style: TextStyle(
+                  productTitle,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text('Playstation'),
-                SizedBox(
+                Text(productCatagory),
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
@@ -63,10 +77,11 @@ class PopularItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart)),
+                IconButton(
+                    onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
                 Text(
-                  '\$325',
-                  style: TextStyle(
+                  '\$$productPrice',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),

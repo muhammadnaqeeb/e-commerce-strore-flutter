@@ -71,7 +71,6 @@ class MyHomeScreen extends StatefulWidget {
 }
 
 class _MyHomeScreenState extends State<MyHomeScreen> {
-  List<String> litems = ["1", "2", "Third", "4"];
   @override
   void initState() {
     super.initState();
@@ -82,7 +81,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<ProductProvider>(context);
-
+    var productData = dataProvider.productData;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -188,7 +187,14 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                         child: ListView.builder(
                             itemCount: 10,
                             itemBuilder: (BuildContext ctxt, int index) {
-                              return PopularItem();
+                              return PopularItem(
+                                imageUrl: productData[index]['category']
+                                    ['image'],
+                                productTitle: productData[index]['title'],
+                                productCatagory: productData[index]['category']
+                                    ['name'],
+                                productPrice: productData[index]['price'],
+                              );
                             }),
                       ),
               ],
