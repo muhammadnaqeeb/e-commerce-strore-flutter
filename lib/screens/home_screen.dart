@@ -6,7 +6,9 @@ import 'package:store/screens/all_product_screen.dart';
 import 'package:store/screens/favorite_product_screen.dart';
 import 'package:store/screens/shopping_cart_sceeen.dart';
 
+import '../widgets/popular_item.dart';
 import '../widgets/sale_slide_card.dart';
+import '../widgets/shimmer_layout.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -69,6 +71,7 @@ class MyHomeScreen extends StatefulWidget {
 }
 
 class _MyHomeScreenState extends State<MyHomeScreen> {
+  List<String> litems = ["1", "2", "Third", "4"];
   @override
   void initState() {
     super.initState();
@@ -147,9 +150,49 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
             ),
           ),
           Container(
-            child: dataProvider.isLoading
-                ? CircularProgressIndicator()
-                : Text('${dataProvider.productData}'),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Popular',
+                      style: TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('see all'),
+                    )
+                  ],
+                ),
+                dataProvider.isLoading
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        width: double.infinity,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: 3,
+                            itemBuilder: (ctx, i) {
+                              return Container(
+                                child: loadingShimmer(),
+                              );
+                            }),
+                      )
+                    : SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        width: double.infinity,
+                        child: ListView.builder(
+                            itemCount: 10,
+                            itemBuilder: (BuildContext ctxt, int index) {
+                              return PopularItem();
+                            }),
+                      ),
+              ],
+            ),
           )
         ],
       ),
