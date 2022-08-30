@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:store/providers/product_provider.dart';
 import 'package:store/screens/all_product_screen.dart';
 import 'package:store/screens/favorite_product_screen.dart';
-import 'package:store/screens/shopping_cart_sceeen.dart';
-
 import '../widgets/popular_item.dart';
 import '../widgets/sale_slide_card.dart';
 import '../widgets/shimmer_layout.dart';
@@ -58,7 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: screens[c_index],
+      body: IndexedStack(
+        index: c_index,
+        children: screens,
+      ),
     );
   }
 }
@@ -101,9 +102,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
             child: IconButton(
               icon: const Icon(Icons.shopping_cart),
               color: Colors.black,
-              onPressed: () {
-                context.read<ProductProvider>().getProductData();
-              },
+              onPressed: () {},
             ),
           ),
         ],
@@ -194,6 +193,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                                 productCatagory: productData[index]['category']
                                     ['name'],
                                 productPrice: productData[index]['price'],
+                                description: productData[index]['description'],
                               );
                             }),
                       ),

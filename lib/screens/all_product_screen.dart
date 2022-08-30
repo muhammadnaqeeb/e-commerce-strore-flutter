@@ -15,7 +15,7 @@ class AllProductScreen extends StatelessWidget {
     var productData = dataProvider.productData;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Naqeeb',
           style: TextStyle(
             color: Colors.black,
@@ -24,14 +24,14 @@ class AllProductScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.shopping_cart,
               color: Colors.black,
             ),
           ),
           IconButton(
             onPressed: () {},
-            icon: Icon(
+            icon: const Icon(
               Icons.person,
               color: Colors.black,
             ),
@@ -51,7 +51,7 @@ class AllProductScreen extends StatelessWidget {
                   child: TextField(
                     cursorColor: Colors.grey,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.search,
                         color: Colors.grey,
                       ),
@@ -95,11 +95,15 @@ class AllProductScreen extends StatelessWidget {
                     crossAxisSpacing: 15,
                     mainAxisSpacing: 15),
                 itemBuilder: ((context, index) {
-                  return AllProductCard(
-                    imgUrl: productData[index]['category']['image'],
-                    title: productData[index]['title'],
-                    price: productData[index]['price'],
-                  );
+                  return productData == null
+                      ? const Center(child: Text('Loading..'))
+                      : AllProductCard(
+                          category: productData[index]['category']['name'],
+                          description: productData[index]['description'],
+                          imgUrl: productData[index]['category']['image'],
+                          title: productData[index]['title'],
+                          price: productData[index]['price'],
+                        );
                 }),
               ),
             ),
