@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:store/screens/shopping_cart_sceeen.dart';
 
@@ -28,6 +26,7 @@ class AllProductScreen extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: ((context) {
                 return ShoppingCarTScreen();
               })));
+              context.read<ProductProvider>().calculatePrice();
             },
             icon: const Icon(
               Icons.shopping_cart,

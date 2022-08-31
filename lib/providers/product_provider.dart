@@ -26,6 +26,11 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void removeProduct(int index) {
+    cartItemsList.removeAt(index);
+    notifyListeners();
+  }
+
   incrementQuantity(int index, int incrementedValue) {
     cartItemsList[index]['quantity'] = incrementedValue;
     notifyListeners();
@@ -35,6 +40,17 @@ class ProductProvider with ChangeNotifier {
     cartItemsList[index]['quantity'] = decrementedValue;
     notifyListeners();
   }
+
+  var totalPrice = 0;
+  calculatePrice() {
+    totalPrice = 0;
+    for (var product in cartItemsList) {
+      int oneProductTotal = product['price'] * product['quantity'];
+      totalPrice += oneProductTotal;
+    }
+    notifyListeners();
+  }
+
   // end list for cart items
 
   Future _getAllData() async {

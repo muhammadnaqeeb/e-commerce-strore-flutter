@@ -113,6 +113,7 @@ class PopularItem extends StatelessWidget {
                         'title': productTitle,
                         'quantity': 1,
                         'price': productPrice,
+                        'img': imageUrl
                       });
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: CustomSnackbarLayout(),

@@ -104,6 +104,8 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
               icon: const Icon(Icons.shopping_cart),
               color: Colors.black,
               onPressed: () {
+                context.read<ProductProvider>().calculatePrice();
+
                 Navigator.push(context, MaterialPageRoute(builder: ((context) {
                   return ShoppingCarTScreen();
                 })));

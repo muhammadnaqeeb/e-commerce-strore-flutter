@@ -23,7 +23,7 @@ class AllProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cartItemsList = context.watch<ProductProvider>().cartItemsList;
+    var productProvider = context.watch<ProductProvider>();
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: ((context) {
@@ -103,10 +103,11 @@ class AllProductCard extends StatelessWidget {
                           child: Icon(Icons.favorite)),
                       GestureDetector(
                           onTap: () {
-                            cartItemsList.add({
+                            productProvider.cartItemsList.add({
                               'title': title,
                               'quantity': 1,
                               'price': price,
+                              'img': imgUrl
                             });
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(const SnackBar(
