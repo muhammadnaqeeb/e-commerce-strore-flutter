@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:store/providers/product_provider.dart';
 import 'package:store/screens/all_product_screen.dart';
 import 'package:store/screens/favorite_product_screen.dart';
+import 'package:store/screens/shopping_cart_sceeen.dart';
 import '../widgets/popular_item.dart';
 import '../widgets/sale_slide_card.dart';
 import '../widgets/shimmer_layout.dart';
@@ -102,7 +103,11 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
             child: IconButton(
               icon: const Icon(Icons.shopping_cart),
               color: Colors.black,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: ((context) {
+                  return ShoppingCarTScreen();
+                })));
+              },
             ),
           ),
         ],
