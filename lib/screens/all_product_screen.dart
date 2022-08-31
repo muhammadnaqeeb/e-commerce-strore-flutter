@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+import 'package:store/screens/shopping_cart_sceeen.dart';
 
 import '../providers/product_provider.dart';
 import '../widgets/all_product_card.dart';
@@ -23,7 +24,11 @@ class AllProductScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: ((context) {
+                return ShoppingCarTScreen();
+              })));
+            },
             icon: const Icon(
               Icons.shopping_cart,
               color: Colors.black,

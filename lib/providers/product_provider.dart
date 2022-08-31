@@ -18,11 +18,13 @@ class ProductProvider with ChangeNotifier {
   }
 
   // list for cart items
-  var cartItemsList = [
-    {'title': "Green Tea", 'quantity': 1, 'price': 456},
-    {'title': "Coffee", 'quantity': 1, 'price': 326}
-  ];
+  var cartItemsList = [];
   get getcardItemsList => cartItemsList;
+
+  void addProduct(var product) {
+    cartItemsList.add(product);
+    notifyListeners();
+  }
 
   incrementQuantity(int index, int incrementedValue) {
     cartItemsList[index]['quantity'] = incrementedValue;

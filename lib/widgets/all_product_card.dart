@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/product_provider.dart';
 import '../screens/single_product_description_screen.dart';
+import 'custom_snackbar_layout.dart';
 
 class AllProductCard extends StatelessWidget {
   String imgUrl;
@@ -20,6 +23,7 @@ class AllProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cartItemsList = context.watch<ProductProvider>().cartItemsList;
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: ((context) {
@@ -99,7 +103,17 @@ class AllProductCard extends StatelessWidget {
                           child: Icon(Icons.favorite)),
                       GestureDetector(
                           onTap: () {
-                            print('Add Clicked');
+                            cartItemsList.add({
+                              'title': title,
+                              'quantity': 1,
+                              'price': price,
+                            });
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: CustomSnackbarLayout(),
+                              behavior: SnackBarBehavior.floating,
+                              duration: Duration(milliseconds: 1500),
+                            ));
                           },
                           child: Icon(Icons.shopping_cart)),
                     ],

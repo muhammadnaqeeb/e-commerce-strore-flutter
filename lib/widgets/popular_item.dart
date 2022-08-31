@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:store/providers/product_provider.dart';
 import 'package:store/screens/single_product_description_screen.dart';
+
+import 'custom_snackbar_layout.dart';
 
 class PopularItem extends StatelessWidget {
   String imageUrl;
@@ -18,6 +22,8 @@ class PopularItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cartItemsList = context.watch<ProductProvider>().cartItemsList;
+
     return Container(
       width: double.infinity,
       height: 74,
@@ -94,7 +100,28 @@ class PopularItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
+                    onPressed: () {
+                      // cartItemsList.add(
+                      //   {
+                      //     'title': productTitle,
+                      //     'quantity': 1,
+                      //     'price': productPrice
+                      //   },
+                      // );
+                      // OR
+                      context.read<ProductProvider>().addProduct({
+                        'title': productTitle,
+                        'quantity': 1,
+                        'price': productPrice,
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: CustomSnackbarLayout(),
+                        behavior: SnackBarBehavior.floating,
+                        duration: Duration(milliseconds: 1500),
+                      ));
+                    },
+                    icon: const Icon(Icons.shopping_cart),
+                  ),
                   Text(
                     '\$$productPrice',
                     style: const TextStyle(
