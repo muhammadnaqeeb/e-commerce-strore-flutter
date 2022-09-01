@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -84,47 +86,52 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<ProductProvider>(context);
     var productData = dataProvider.productData;
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Store',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        leading: const Icon(
-          Icons.store,
+    final appBar = AppBar(
+      title: const Text(
+        'Store',
+        style: TextStyle(
           color: Colors.black,
         ),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 30),
-            child: IconButton(
-              icon: const Icon(Icons.shopping_cart),
-              color: Colors.black,
-              onPressed: () {
-                context.read<ProductProvider>().calculatePrice();
-
-                Navigator.push(context, MaterialPageRoute(builder: ((context) {
-                  return ShoppingCarTScreen();
-                })));
-              },
-            ),
-          ),
-        ],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
       ),
+      leading: const Icon(
+        Icons.store,
+        color: Colors.black,
+      ),
+      actions: [
+        Container(
+          margin: const EdgeInsets.only(right: 30),
+          child: IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            color: Colors.black,
+            onPressed: () {
+              context.read<ProductProvider>().calculatePrice();
+
+              Navigator.push(context, MaterialPageRoute(builder: ((context) {
+                return ShoppingCarTScreen();
+              })));
+            },
+          ),
+        ),
+      ],
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    );
+    Size size = MediaQuery.of(context).size;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final appBarHeight = appBar.preferredSize.height;
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+    double btmNavigationBarHeight =
+        Platform.isAndroid ? kBottomNavigationBarHeight : 90;
+    return Scaffold(
+      appBar: appBar,
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(
-              top: 5,
+          Container(
+            height: 35,
+            padding: const EdgeInsets.only(
               left: 20,
-              bottom: 15,
             ),
-            child: Align(
+            child: const Align(
               alignment: Alignment.topLeft,
               child: Text(
                 'Today\'s Sales!',
@@ -136,7 +143,12 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
             ),
           ),
           SizedBox(
-            height: size.height * 0.25,
+            height: (screenHeight -
+                    appBarHeight -
+                    statusBarHeight -
+                    btmNavigationBarHeight -
+                    35) *
+                .35,
             child: Swiper(
               itemCount: 3,
               itemBuilder: ((context, index) {
@@ -155,24 +167,27 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 18),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Popular',
-                      style: TextStyle(
-                        fontSize: 21,
-                        fontWeight: FontWeight.w500,
+                Container(
+                  height: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Popular',
+                        style: TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('see all'),
-                    )
-                  ],
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text('see all'),
+                      )
+                    ],
+                  ),
                 ),
                 dataProvider.isLoading
                     ? SizedBox(
@@ -188,7 +203,13 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                             }),
                       )
                     : SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.35,
+                        height: (screenHeight -
+                                appBarHeight -
+                                statusBarHeight -
+                                btmNavigationBarHeight -
+                                35 -
+                                50) *
+                            0.60,
                         width: double.infinity,
                         child: ListView.builder(
                             itemCount: 10,
