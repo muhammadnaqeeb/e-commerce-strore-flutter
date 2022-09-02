@@ -42,19 +42,19 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Container(
               margin: const EdgeInsets.only(left: 30),
-              child: const Icon(Icons.home),
+              child: const Icon(Icons.roofing_rounded),
             ),
             label: 'Home',
             backgroundColor: Colors.blue,
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.collections),
+            icon: Icon(Icons.auto_awesome_rounded),
             label: 'AllItems',
           ),
           BottomNavigationBarItem(
             icon: Container(
                 margin: const EdgeInsets.only(right: 30),
-                child: const Icon(Icons.favorite)),
+                child: const Icon(Icons.favorite_outline_rounded)),
             label: 'favorite',
           )
         ],
@@ -94,14 +94,15 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
         ),
       ),
       leading: const Icon(
-        Icons.store,
+        Icons.shopping_bag_outlined,
         color: Colors.black,
       ),
+      titleSpacing: 0,
       actions: [
         Container(
           margin: const EdgeInsets.only(right: 30),
           child: IconButton(
-            icon: const Icon(Icons.shopping_cart),
+            icon: const Icon(Icons.shopping_cart_rounded),
             color: Colors.black,
             onPressed: () {
               context.read<ProductProvider>().calculatePrice();

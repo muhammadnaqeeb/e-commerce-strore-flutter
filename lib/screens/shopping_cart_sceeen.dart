@@ -108,7 +108,7 @@ class _ShoppingCarTScreenState extends State<ShoppingCarTScreen> {
                                               .read<ProductProvider>()
                                               .calculatePrice();
                                         },
-                                        child: Icon(Icons.add_circle),
+                                        child: const Icon(Icons.add_circle),
                                       ),
                                       const SizedBox(
                                         width: 5,
@@ -152,7 +152,7 @@ class _ShoppingCarTScreenState extends State<ShoppingCarTScreen> {
                               context.read<ProductProvider>().calculatePrice();
                             },
                             icon: const Icon(
-                              Icons.delete,
+                              Icons.delete_rounded,
                               color: Colors.red,
                             ),
                           ),

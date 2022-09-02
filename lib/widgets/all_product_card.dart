@@ -100,23 +100,24 @@ class AllProductCard extends StatelessWidget {
                           onTap: () {
                             print('Favorite Clicked');
                           },
-                          child: Icon(Icons.favorite)),
+                          child: const Icon(Icons.favorite_outline_rounded)),
                       GestureDetector(
-                          onTap: () {
-                            productProvider.cartItemsList.add({
-                              'title': title,
-                              'quantity': 1,
-                              'price': price,
-                              'img': imgUrl
-                            });
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: CustomSnackbarLayout(),
-                              behavior: SnackBarBehavior.floating,
-                              duration: Duration(milliseconds: 1500),
-                            ));
-                          },
-                          child: Icon(Icons.shopping_cart)),
+                        onTap: () {
+                          productProvider.cartItemsList.add({
+                            'title': title,
+                            'quantity': 1,
+                            'price': price,
+                            'img': imgUrl
+                          });
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: CustomSnackbarLayout(),
+                            behavior: SnackBarBehavior.floating,
+                            duration: Duration(milliseconds: 1500),
+                          ));
+                        },
+                        child: const Icon(Icons.shopping_cart),
+                      ),
                     ],
                   )
                 ],

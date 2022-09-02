@@ -121,7 +121,7 @@ class PopularItem extends StatelessWidget {
                         duration: Duration(milliseconds: 1500),
                       ));
                     },
-                    icon: const Icon(Icons.shopping_cart),
+                    icon: const Icon(Icons.shopping_cart_rounded),
                   ),
                   Text(
                     '\$$productPrice',
