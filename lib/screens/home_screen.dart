@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:store/providers/product_provider.dart';
 import 'package:store/screens/all_product_screen.dart';
-import 'package:store/screens/favorite_product_screen.dart';
+import 'package:store/screens/person_screen.dart';
 import 'package:store/screens/shopping_cart_sceeen.dart';
 import '../widgets/popular_item.dart';
 import '../widgets/sale_slide_card.dart';
@@ -20,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int c_index = 0;
-  final screens = [MyHomeScreen(), AllProductScreen(), FavoriteProductScreen()];
+  final screens = [MyHomeScreen(), AllProductScreen(), PersonScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Container(
                 margin: const EdgeInsets.only(right: 30),
-                child: const Icon(Icons.favorite_outline_rounded)),
+                child: const Icon(Icons.person_outline_rounded)),
             label: 'favorite',
           )
         ],

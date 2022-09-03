@@ -5,22 +5,28 @@ import '../providers/product_provider.dart';
 import '../screens/single_product_description_screen.dart';
 import 'custom_snackbar_layout.dart';
 
-class AllProductCard extends StatelessWidget {
+class AllProductCard extends StatefulWidget {
   String imgUrl;
   String title;
   int price;
-  String category;
-  String description;
+  String? category;
+  String? description;
 
   AllProductCard({
     required this.title,
     required this.imgUrl,
     required this.price,
-    required this.category,
-    required this.description,
+    this.category,
+    this.description,
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<AllProductCard> createState() => _AllProductCardState();
+}
+
+class _AllProductCardState extends State<AllProductCard> {
+  bool changeFavourateIcon = false;
   @override
   Widget build(BuildContext context) {
     var productProvider = context.watch<ProductProvider>();
@@ -28,11 +34,11 @@ class AllProductCard extends StatelessWidget {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: ((context) {
           return ProductDescription_Screen(
-            imgUrl: imgUrl,
-            catogory: category,
-            price: price,
-            title: title,
-            description: description,
+            imgUrl: widget.imgUrl,
+            catogory: widget.category!,
+            price: widget.price,
+            title: widget.title,
+            description: widget.description!,
           );
         })));
       },
@@ -58,7 +64,7 @@ class AllProductCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(18),
                 child: Image(
-                  image: NetworkImage(imgUrl),
+                  image: NetworkImage(widget.imgUrl),
                 ),
               ),
             ),
@@ -77,7 +83,7 @@ class AllProductCard extends StatelessWidget {
                       SizedBox(
                         width: 90,
                         child: Text(
-                          title,
+                          widget.title,
                           maxLines: 2,
                         ),
                       ),
@@ -85,7 +91,7 @@ class AllProductCard extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        '\$$price',
+                        '\$${widget.price}',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       )
                     ],
@@ -98,16 +104,25 @@ class AllProductCard extends StatelessWidget {
                       //     onPressed: () {}, icon: const Icon(Icons.favorite)),
                       GestureDetector(
                           onTap: () {
-                            print('Favorite Clicked');
+                            setState(() {
+                              changeFavourateIcon = !changeFavourateIcon;
+                            });
                           },
-                          child: const Icon(Icons.favorite_outline_rounded)),
+                          child: changeFavourateIcon
+                              ? const Icon(
+                                  Icons.favorite_rounded,
+                                  color: Colors.red,
+                                )
+                              : const Icon(
+                                  Icons.favorite_outline_rounded,
+                                )),
                       GestureDetector(
                         onTap: () {
                           productProvider.cartItemsList.add({
-                            'title': title,
+                            'title': widget.title,
                             'quantity': 1,
-                            'price': price,
-                            'img': imgUrl
+                            'price': widget.price,
+                            'img': widget.imgUrl
                           });
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
