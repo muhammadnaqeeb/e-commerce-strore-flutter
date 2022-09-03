@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:provider/provider.dart';
-
 class ProductProvider with ChangeNotifier {
   var _productData;
   bool isLoading = false;

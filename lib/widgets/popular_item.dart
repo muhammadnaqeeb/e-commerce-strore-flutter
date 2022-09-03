@@ -43,7 +43,7 @@ class PopularItem extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: ((context) {
-            return ProductDescription_Screen(
+            return ProductDescriptionScreen(
               imgUrl: imageUrl,
               catogory: productCatagory,
               price: productPrice,
@@ -57,11 +57,13 @@ class PopularItem extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 7),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(9),
-                  child: Image.network(imageUrl),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image(
+                    image: NetworkImage(imageUrl),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),

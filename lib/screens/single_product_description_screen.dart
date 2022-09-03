@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../widgets/custom_buttom.dart';
 
-class ProductDescription_Screen extends StatelessWidget {
+class ProductDescriptionScreen extends StatelessWidget {
   String catogory;
   String title;
   int price;
   String description;
   String imgUrl;
-  ProductDescription_Screen(
+  ProductDescriptionScreen(
       {required this.imgUrl,
       required this.catogory,
       required this.title,
@@ -30,7 +30,9 @@ class ProductDescription_Screen extends StatelessWidget {
                 bottomRight: Radius.circular(18),
               ),
               child: Image(
+                width: double.infinity,
                 image: NetworkImage(imgUrl),
+                fit: BoxFit.fitWidth,
               ),
             ),
             const SizedBox(

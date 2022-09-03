@@ -33,7 +33,7 @@ class _AllProductCardState extends State<AllProductCard> {
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: ((context) {
-          return ProductDescription_Screen(
+          return ProductDescriptionScreen(
             imgUrl: widget.imgUrl,
             catogory: widget.category!,
             price: widget.price,
@@ -65,6 +65,7 @@ class _AllProductCardState extends State<AllProductCard> {
                 borderRadius: BorderRadius.circular(18),
                 child: Image(
                   image: NetworkImage(widget.imgUrl),
+                  fit: BoxFit.fill,
                 ),
               ),
             ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:store/models/discount_model.dart';
 import 'package:store/providers/product_provider.dart';
 import 'package:store/screens/all_product_screen.dart';
 import 'package:store/screens/person_screen.dart';
@@ -115,7 +116,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                           child: Center(
                             child: Text(
                               '${dataProvider.getcardItemsList.length}',
-                              style: TextStyle(fontSize: 6),
+                              style: const TextStyle(fontSize: 6),
                             ),
                           ),
                         )
@@ -137,120 +138,136 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
       backgroundColor: Colors.transparent,
       elevation: 0,
     );
-    Size size = MediaQuery.of(context).size;
+    List<Discount> discountList = Discount.discounts;
     final screenHeight = MediaQuery.of(context).size.height;
     final appBarHeight = appBar.preferredSize.height;
     final statusBarHeight = MediaQuery.of(context).padding.top;
     double btmNavigationBarHeight =
         Platform.isAndroid ? kBottomNavigationBarHeight : 90;
+
+    bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
     return Scaffold(
       appBar: appBar,
-      body: Column(
-        children: [
-          Container(
-            height: 35,
-            padding: const EdgeInsets.only(
-              left: 20,
+      body: ListView(children: [
+        Column(
+          children: [
+            const SizedBox(
+              height: 5,
             ),
-            child: const Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Today\'s Sales!',
-                style: TextStyle(
-                  fontSize: 21,
-                  fontWeight: FontWeight.w500,
+            Container(
+              padding: const EdgeInsets.only(left: 20, bottom: 15),
+              child: const Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Today\'s Sales!',
+                  style: TextStyle(
+                    fontSize: 21,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: (screenHeight -
-                    appBarHeight -
-                    statusBarHeight -
-                    btmNavigationBarHeight -
-                    35) *
-                .35,
-            child: Swiper(
-              itemCount: 3,
-              itemBuilder: ((context, index) {
-                return saleSlideCard();
-              }),
-              viewportFraction: 0.8,
-              scale: 0.9,
-              // pagination: const SwiperPagination(
-              //   alignment: Alignment.bottomCenter,
-              //   builder: DotSwiperPaginationBuilder(
-              //     color: Colors.white,
-              //     activeColor: Colors.red,
-              //   ),
-              // ),
-              //control: SwiperControl(),
+            SizedBox(
+              height: isPortrait
+                  ? (screenHeight -
+                          appBarHeight -
+                          statusBarHeight -
+                          btmNavigationBarHeight -
+                          35) *
+                      .32
+                  : (screenHeight -
+                          appBarHeight -
+                          statusBarHeight -
+                          btmNavigationBarHeight -
+                          35) *
+                      .95,
+              child: Swiper(
+                itemCount: 3,
+                itemBuilder: ((context, index) {
+                  return SaleSlideCard(
+                    discount: discountList[index].discount,
+                    description: discountList[index].description,
+                    img: discountList[index].img,
+                  );
+                }),
+                viewportFraction: 0.8,
+                scale: 0.9,
+              ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Column(
-              children: [
-                Container(
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Popular',
-                        style: TextStyle(
-                          fontSize: 21,
-                          fontWeight: FontWeight.w500,
-                        ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    child: Text(
+                      'Popular',
+                      style: TextStyle(
+                        fontSize: 21,
+                        fontWeight: FontWeight.w500,
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text('see all'),
-                      )
-                    ],
+                    ),
                   ),
-                ),
-                dataProvider.isLoading
-                    ? SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.35,
-                        width: double.infinity,
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: 3,
-                            itemBuilder: (ctx, i) {
-                              return Container(
-                                child: loadingShimmer(),
-                              );
-                            }),
-                      )
-                    : SizedBox(
-                        height: (screenHeight -
-                                appBarHeight -
-                                statusBarHeight -
-                                btmNavigationBarHeight -
-                                35 -
-                                50) *
-                            0.60,
-                        width: double.infinity,
-                        child: ListView.builder(
-                            itemCount: 10,
-                            itemBuilder: (BuildContext ctxt, int index) {
-                              return PopularItem(
-                                imageUrl: productData[index]['category']
-                                    ['image'],
-                                productTitle: productData[index]['title'],
-                                productCatagory: productData[index]['category']
-                                    ['name'],
-                                productPrice: productData[index]['price'],
-                                description: productData[index]['description'],
-                              );
-                            }),
-                      ),
-              ],
-            ),
-          )
-        ],
-      ),
+                  dataProvider.isLoading
+                      ? SizedBox(
+                          height: (screenHeight -
+                                  appBarHeight -
+                                  statusBarHeight -
+                                  btmNavigationBarHeight -
+                                  35 -
+                                  50) *
+                              0.60,
+                          width: double.infinity,
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: 5,
+                              itemBuilder: (ctx, i) {
+                                return Container(
+                                  child: loadingShimmer(),
+                                );
+                              }),
+                        )
+                      : SizedBox(
+                          height: isPortrait
+                              ? (screenHeight -
+                                      appBarHeight -
+                                      statusBarHeight -
+                                      btmNavigationBarHeight -
+                                      35 -
+                                      50) *
+                                  0.60
+                              : (screenHeight -
+                                      appBarHeight -
+                                      statusBarHeight -
+                                      btmNavigationBarHeight -
+                                      35 -
+                                      50) *
+                                  1,
+                          width: double.infinity,
+                          child: ListView.builder(
+                              itemCount: 10,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (BuildContext ctxt, int index) {
+                                return PopularItem(
+                                  imageUrl: productData[index]['category']
+                                      ['image'],
+                                  productTitle: productData[index]['title'],
+                                  productCatagory: productData[index]
+                                      ['category']['name'],
+                                  productPrice: productData[index]['price'],
+                                  description: productData[index]
+                                      ['description'],
+                                );
+                              }),
+                        ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ]),
     );
   }
 }

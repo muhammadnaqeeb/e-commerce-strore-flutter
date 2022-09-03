@@ -48,7 +48,7 @@ class _AllProductScreenState extends State<AllProductScreen> {
                           child: Center(
                             child: Text(
                               '${dataProvider.getcardItemsList.length}',
-                              style: TextStyle(fontSize: 6),
+                              style: const TextStyle(fontSize: 6),
                             ),
                           ),
                         )
@@ -71,7 +71,6 @@ class _AllProductScreenState extends State<AllProductScreen> {
       elevation: 0,
     );
 
-    Size size = MediaQuery.of(context).size;
     final screenHeight = MediaQuery.of(context).size.height;
     final appBarHeight = appBar.preferredSize.height;
     final statusBarHeight = MediaQuery.of(context).padding.top;
@@ -80,85 +79,88 @@ class _AllProductScreenState extends State<AllProductScreen> {
 
     return Scaffold(
       appBar: appBar,
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Container(
-              height: 60,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 7,
-                    child: TextField(
-                      cursorColor: Colors.grey,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                        filled: true,
-                        hintText: "Search",
-                        fillColor: Colors.grey.shade200,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: BorderSide.none,
+      body: ListView(children: [
+        Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 60,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: TextField(
+                        cursorColor: Colors.grey,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
+                          filled: true,
+                          hintText: "Search",
+                          fillColor: Colors.grey.shade200,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide.none,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                      flex: 2,
-                      child: Container(
-                        height: 55,
-                        margin: const EdgeInsets.only(left: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.tune,
-                              color: Colors.white,
-                            )),
-                      ))
-                ],
+                    Expanded(
+                        flex: 2,
+                        child: Container(
+                          height: 55,
+                          margin: const EdgeInsets.only(left: 5),
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.tune,
+                                color: Colors.white,
+                              )),
+                        ))
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            SizedBox(
-              height: (screenHeight -
-                  appBarHeight -
-                  statusBarHeight -
-                  btmNavigationBarHeight -
-                  15 -
-                  60 -
-                  40),
-              child: GridView.builder(
-                itemCount: 10,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    mainAxisExtent: 210,
-                    crossAxisSpacing: 15,
-                    mainAxisSpacing: 15),
-                itemBuilder: ((context, index) {
-                  return productData == null
-                      ? const Center(child: Text('Loading..'))
-                      : AllProductCard(
-                          category: productData[index]['category']['name'],
-                          description: productData[index]['description'],
-                          imgUrl: productData[index]['category']['image'],
-                          title: productData[index]['title'],
-                          price: productData[index]['price'],
-                        );
-                }),
+              const SizedBox(
+                height: 15,
               ),
-            ),
-          ],
+              SizedBox(
+                //////////no need of height now/////////
+                height: (screenHeight -
+                    appBarHeight -
+                    statusBarHeight -
+                    btmNavigationBarHeight -
+                    15 -
+                    60),
+                child: GridView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: productData == null ? 0 : productData.length,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      mainAxisExtent: 210,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 15),
+                  itemBuilder: ((context, index) {
+                    return productData == null
+                        ? const Center(child: Text('Loading..'))
+                        : AllProductCard(
+                            category: productData[index]['category']['name'],
+                            description: productData[index]['description'],
+                            imgUrl: productData[index]['category']['image'],
+                            title: productData[index]['title'],
+                            price: productData[index]['price'],
+                          );
+                  }),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+      ]),
     );
   }
 }
