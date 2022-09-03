@@ -102,7 +102,27 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
         Container(
           margin: const EdgeInsets.only(right: 30),
           child: IconButton(
-            icon: const Icon(Icons.shopping_cart_rounded),
+            icon: Stack(
+              children: [
+                const Icon(Icons.shopping_cart_rounded),
+                Positioned(
+                  top: 0.0,
+                  right: 0.0,
+                  child: dataProvider.getcardItemsList.length > 0
+                      ? CircleAvatar(
+                          radius: 6,
+                          backgroundColor: Colors.red,
+                          child: Center(
+                            child: Text(
+                              '${dataProvider.getcardItemsList.length}',
+                              style: TextStyle(fontSize: 6),
+                            ),
+                          ),
+                        )
+                      : const Text(''),
+                )
+              ],
+            ),
             color: Colors.black,
             onPressed: () {
               context.read<ProductProvider>().calculatePrice();

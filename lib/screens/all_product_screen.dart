@@ -7,44 +7,70 @@ import 'package:store/screens/shopping_cart_sceeen.dart';
 import '../providers/product_provider.dart';
 import '../widgets/all_product_card.dart';
 
-class AllProductScreen extends StatelessWidget {
+class AllProductScreen extends StatefulWidget {
   const AllProductScreen({Key? key}) : super(key: key);
 
   @override
+  State<AllProductScreen> createState() => _AllProductScreenState();
+}
+
+class _AllProductScreenState extends State<AllProductScreen> {
+  @override
   Widget build(BuildContext context) {
+    final dataProvider = Provider.of<ProductProvider>(context);
+    var productData = dataProvider.productData;
     final appBar = AppBar(
       title: const Text(
-        'Naqeeb',
+        'Store',
         style: TextStyle(
           color: Colors.black,
         ),
       ),
+      leading: const Icon(
+        Icons.shopping_bag_outlined,
+        color: Colors.black,
+      ),
+      titleSpacing: 0,
       actions: [
-        IconButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: ((context) {
-              return ShoppingCarTScreen();
-            })));
-            context.read<ProductProvider>().calculatePrice();
-          },
-          icon: const Icon(
-            Icons.shopping_cart,
+        Container(
+          margin: const EdgeInsets.only(right: 30),
+          child: IconButton(
+            icon: Stack(
+              children: [
+                const Icon(Icons.shopping_cart_rounded),
+                Positioned(
+                  top: 0.0,
+                  right: 0.0,
+                  child: dataProvider.getcardItemsList.length > 0
+                      ? CircleAvatar(
+                          radius: 6,
+                          backgroundColor: Colors.red,
+                          child: Center(
+                            child: Text(
+                              '${dataProvider.getcardItemsList.length}',
+                              style: TextStyle(fontSize: 6),
+                            ),
+                          ),
+                        )
+                      : const Text(''),
+                )
+              ],
+            ),
             color: Colors.black,
+            onPressed: () {
+              context.read<ProductProvider>().calculatePrice();
+
+              Navigator.push(context, MaterialPageRoute(builder: ((context) {
+                return ShoppingCarTScreen();
+              })));
+            },
           ),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.person,
-            color: Colors.black,
-          ),
-        )
       ],
       backgroundColor: Colors.transparent,
       elevation: 0,
     );
-    final dataProvider = Provider.of<ProductProvider>(context);
-    var productData = dataProvider.productData;
+
     Size size = MediaQuery.of(context).size;
     final screenHeight = MediaQuery.of(context).size.height;
     final appBarHeight = appBar.preferredSize.height;

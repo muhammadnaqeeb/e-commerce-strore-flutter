@@ -118,7 +118,7 @@ class _AllProductCardState extends State<AllProductCard> {
                                 )),
                       GestureDetector(
                         onTap: () {
-                          productProvider.cartItemsList.add({
+                          context.read<ProductProvider>().addProduct({
                             'title': widget.title,
                             'quantity': 1,
                             'price': widget.price,
